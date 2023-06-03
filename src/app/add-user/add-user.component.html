@@ -1,0 +1,81 @@
+<!-- <h2>Add User</h2>
+<form [formGroup]="addUserForm" (ngSubmit)="onSubmit()">
+
+  <div class="form-outline w-25 row top-buffer">
+    <label for="name">Name:</label>
+    <input type="text" id="name" formControlName="name" class="form-control"  >
+  </div>
+
+  <div class="form-outline w-25 row top-buffer">    <label for="email">Email:</label>
+    <input type="email" id="email" formControlName="email" class="form-control" >
+  </div>
+
+ <div class="form-outline w-25 row top-buffer">
+    <label for="phone">Phone:</label>
+    <input type="text" id="phone" formControlName="phone" class="form-control" >
+  </div>
+
+ <div class="form-outline w-25 row top-buffer">
+    <label for="experience">Experience:</label>
+    <input type="number" id="experience" formControlName="experience" class="form-control" >
+  </div>
+
+ <div class="form-outline w-25 row top-buffer">
+    
+    <label for="type">Type:</label>
+    <ng-select type="text" id="type" formControlName="type" class="form-control" [items]="types" bindLabel="label" bindValue="value"> </ng-select>
+    // <ng-select formControlName="type" [items]="types" bindLabel="label" bindValue="value"></ng-select> 
+  </div>
+
+  <button type="submit" class="btn btn-primary" class="row top-buffer">Add User</button>
+</form> -->
+
+
+
+
+<h2>Add User</h2>
+
+<form [formGroup]="addUserForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label>Name:</label>
+    <input type="text" class="form-control" formControlName="name">
+    <div *ngIf="addUserForm.controls['name'].invalid && addUserForm.controls['name'].touched" class="text-danger">
+      Name is required.
+    </div>
+  </div>
+  <div class="form-group">
+    <label>Email:</label>
+    <input type="email" class="form-control" formControlName="email">
+    <div *ngIf="addUserForm.controls['email'].invalid && addUserForm.controls['email'].touched" class="text-danger">
+      Email is required and should be a valid email address.
+    </div>
+  </div>
+  <div class="form-group">
+    <label>Phone:</label>
+    <input type="text" class="form-control" formControlName="phone">
+    <div *ngIf="addUserForm.controls['phone'].invalid && addUserForm.controls['phone'].touched" class="text-danger">
+      Phone is required.
+    </div>
+  </div>
+  <div class="form-group">
+    <label>Experience:</label>
+    <input type="number" class="form-control" formControlName="experience">
+    <div *ngIf="addUserForm.controls['experience'].invalid && addUserForm.controls['experience'].touched" class="text-danger">
+      Experience is required and should be a number.
+    </div>
+  </div>
+  <div class="form-group">
+    <label>Type:</label>
+    <select class="form-control" formControlName="type">
+      <option value="" disabled>Select Type</option>
+      <option value="admin">Admin</option>
+      <option value="manager">Manager</option>
+      <option value="user">User</option>
+    </select>
+    <div *ngIf="addUserForm.controls['type'].invalid && addUserForm.controls['type'].touched" class="text-danger">
+      Type is required.
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Add User</button>
+</form>
+

@@ -1,0 +1,67 @@
+<!-- <h2>All Users</h2>
+<table >
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Phone</th>
+    <th>Experience</th>
+    <th>Type</th>
+    <th>Actions</th>
+  </tr>
+  <tr *ngFor="let user of users">
+    <td>{{ user.name }}</td>
+    <td>{{ user.email }}</td>
+    <td>{{ user.phone }}</td>
+    <td>{{ user.experience }}</td>
+     <td>{{ user.type }}</td> 
+   //  <ng-select [items]="types" bindLabel="label" bindValue="value" [(ngModel)]="user.type"></ng-select>
+    
+    <td>    <ng-select formControlName="type" [items]="types" bindLabel="label" bindValue="value"></ng-select></td>
+    
+    <td>
+  //    <button (click)="viewUser(user)">View</button> &nbsp; 
+      <button (click)="deleteUser(user)">Delete</button>
+    </td>
+  </tr>
+</table> -->
+
+
+
+<h2>User List</h2>
+
+<!-- Search input -->
+<input type="text" placeholder="Search by name or email" >
+<!--in above line after email"  ->    [(ngModel)]="searchText" -->
+
+<!-- User table -->
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Experience</th>
+      <th>Type</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users "> 
+      <!-- in above line after users write    ->   | search: searchText -->
+      <td>{{ user.id }}</td>
+      <td>{{ user.name }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.phone }}</td>
+      <td>{{ user.experience }}</td>
+      <td>{{ user.type }}</td>
+      <td>
+        <!-- <button class="btn btn-primary" routerLink="/users/view/{{ user.id }}">View</button>
+        <button class="btn btn-warning" routerLink="/users/edit/{{ user.id }}">Edit</button>
+        <button class="btn btn-danger" (click)="deleteUser(user.id)">Delete</button> -->
+        <button (click)="editUser(user.id)">Edit</button>
+        <button (click)="deleteUser(user.id)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

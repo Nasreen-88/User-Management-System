@@ -1,0 +1,25 @@
+
+<h2>Edit User</h2>
+<form [formGroup]="editUserForm" (ngSubmit)="onSubmit()">
+  <div class="form-outline w-25 row top-buffer">
+    <label for="name">Name:</label>
+    <input type="text" id="name" formControlName="name">
+  </div>
+  <div class="form-outline w-25 row top-buffer">
+    <label for="email">Email:</label>
+    <input type="email" id="email" formControlName="email">
+  </div>
+  <div class="form-outline w-25 row top-buffer">
+    <label for="phone">Phone:</label>
+    <input type="text" id="phone" formControlName="phone">
+  </div>
+  <div class="form-outline w-25 row top-buffer">
+    <label for="experience">Experience:</label>
+    <input type="number" id="experience" formControlName="experience">
+  </div>
+  <div class="form-outline w-25 row top-buffer">
+    <label for="type">Type:</label>
+    <input type="text" id="type" formControlName="type">
+  </div>
+  <button type="submit" class="btn btn-primary" class="row top-buffer">Update User</button>
+</form>
