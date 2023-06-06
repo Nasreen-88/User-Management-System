@@ -10,12 +10,12 @@ import { HomeComponent } from './home/home.component';
 
 
 const routes: Routes = [
- 
-     {path:'allUsers', component: AllUsersComponent},
-     {path:'addUser', component: AddUserComponent},
-     {path:'editUser', component: EditUserComponent},
-     {path:'', component: HomeComponent},
-     {path:'**', component:PageNotFoundComponent}
+
+  { path: 'allUsers', component: AllUsersComponent },
+  { path: 'addUser', component: AddUserComponent },
+  { path: 'editUser', component: EditUserComponent },
+  { path: '', component: HomeComponent },
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 
