@@ -11,6 +11,18 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ReactiveFormsModule } from '@angular/forms'
 import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
+
+// import { AppRoutingModule } from './app-routing.module';
+
+
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { UserDetailsModalComponent } from './user-details-modal/user-details-modal.component';
+import { FilterPipe } from './filter.pipe';
+
 
 
 
@@ -21,14 +33,20 @@ import { HttpClientModule } from '@angular/common/http';
     AddUserComponent,
     EditUserComponent,
     HomeComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    UserDetailsModalComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgSelectModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ModalModule.forRoot(),
+    RouterModule,
+    PaginationModule.forRoot(),
+    FlexLayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]

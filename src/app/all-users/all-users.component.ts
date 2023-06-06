@@ -1,9 +1,168 @@
+
+import { Component, OnInit, TemplateRef } from '@angular/core';
+import { UserService } from '../user.service';
+import { Router } from '@angular/router';
+import { User } from '../models/user.model';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import Swal from 'sweetalert2';
+import { FormGroup, FormControl } from '@angular/forms';
+import { FilterPipe } from '../filter.pipe';
+import { PaginationConfig } from 'ngx-bootstrap/pagination';
+
+
+
+
+@Component({
+  selector: 'app-all-users',
+  templateUrl: './all-users.component.html',
+  styleUrls: ['./all-users.component.css'],
+})
+export class AllUsersComponent implements OnInit {
+  // users!: any[];
+  users: User[] = [];
+  selectedUser!: User;
+  modalRef!: BsModalRef;
+  searchForm: FormGroup;
+  filteredUsers!: User[];
+  searchQuery: string = '';
+
+  // pageSize = 5;
+  // currentPage = 1;
+
+  // Pagination properties
+  totalItems!: number;
+  itemsPerPage: number = 5;
+  currentPage: number = 1;
+
+
+  constructor(private userService: UserService, private modalService: BsModalService,private router: Router) {
+
+    this.totalItems = this.users.length;
+
+
+    this.searchForm = new FormGroup({
+      searchQuery: new FormControl('')
+    });
+   }
+
+   pageChanged(event: any): void {
+    this.currentPage = event.page;
+  }
+  
+  
+  ngOnInit() {
+    this.userService.getUsers().subscribe(users => {
+      this.users = users;
+      this.filteredUsers = users;
+
+    });
+    this.searchForm.get('searchQuery')?.valueChanges.subscribe(() => {
+      this.search();
+    });
+  }
+
+  search(): void {
+    const searchTerm = this.searchForm.get('searchQuery')?.value.toLowerCase();
+    this.filteredUsers = this.users.filter(user => {
+      const name = user.name.toLowerCase();
+      const email = user.email.toLowerCase();
+      return name.includes(searchTerm) || email.includes(searchTerm);
+    });
+  }
+ 
+  openModal(template: any, user: User) {
+    this.selectedUser = user;
+    this.modalRef = this.modalService.show(template);
+  }
+  // openModal(template: TemplateRef<any>, user: User) {
+  //   this.selectedUser = user;
+  //   this.modalRef = this.modalService.show(template);
+  // }
+
+  closeModal() {
+    this.modalRef.hide();
+  }
+
+
+  editUser(user: User) {
+    // Redirect to the edit user page with the user ID
+    this.router.navigate(['/editUser', user.id]);
+  }
+
+  deleteUser(user: User) {
+    Swal.fire({
+      title: 'Confirm Delete',
+      text: 'Are you sure you want to delete this user?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Delete'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Delete the user from the list
+        const index = this.users.indexOf(user);
+        if (index > -1) {
+          this.users.splice(index, 1);
+        }
+        // Show success message
+        Swal.fire('Deleted!', 'User has been deleted.', 'success');
+      }
+    });
+  }
+  
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // import { Component, OnInit } from '@angular/core';
 // import { UserService } from '../user.service';
 // import { User } from '../user.interface';
-
-
-
 
 // @Component({
 //   selector: 'app-all-users',
@@ -91,19 +250,31 @@
 // }
 
 
-import { Component, OnInit } from '@angular/core';
-import { UserService } from '../user.service';
-import { User } from '../user.interface';
 
-@Component({
-  selector: 'app-all-users',
-  templateUrl: './all-users.component.html',
-  styleUrls: ['./all-users.component.css']
-})
-export class AllUsersComponent implements OnInit {
-  users: any[] = [];
 
-  constructor(private userService: UserService) { }
+
+
+
+
+
+
+  // ngOnInit(): void {
+  //   this.userService.getUsers().subscribe(users => {
+  //     this.users = users;
+  //   });
+  // }
+
+  // ngOnInit() {
+  //     this.userService.getUsers().subscribe(
+  //       (res:any)=>{
+  //         console.log(res);
+  //         this.users = res
+  //       },
+  //       (err:any)=>{
+  //         console.log(err);
+  //       }
+  //     )
+  //   }
 
 
   // ngOnInit() {
@@ -112,26 +283,25 @@ export class AllUsersComponent implements OnInit {
   //   });
   // }
 
+//Working code  below
+  // ngOnInit() {
+  //   this.userService.getUsers().subscribe(
+  //     (res:any)=>{
+  //       console.log(res);
+  //       this.users = res
+  //     },
+  //     (err:any)=>{
+  //       console.log(err);
+  //     }
+  //   )
+  // }
 
-  ngOnInit() {
-    this.userService.getUsers().subscribe(
-      (res:any)=>{
-        console.log(res);
-        this.users = res
-      },
-      (err:any)=>{
-        console.log(err);
-      }
-    )
-  }
+  // editUser(id:number  )
+  // {
 
-  editUser(id:number  )
-  {
-
-  }
-  deleteUser(id: number) {
-    this.userService.deleteUser(id).subscribe(() => {
-      this.users = this.users.filter(user => user.id !== id);
-    });
-  }
-}
+  // }
+  // deleteUser(id: number) {
+  //   this.userService.deleteUser(id).subscribe(() => {
+  //     this.users = this.users.filter(user => user.id !== id);
+  //   });
+  // }

@@ -1,0 +1,12 @@
+$primary-color: gray;
+
+@import '~bootstrap/dist/css/bootstrap.css';
+
+
+
+
+
+/* // Override Bootstrap styles with custom colors */
+.navbar {
+  background-color: $primary-color;
+}
