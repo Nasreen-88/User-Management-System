@@ -85,6 +85,7 @@
   <li *ngFor="let user of filteredUsers">Email :- {{ user.email }}</li>
 </ul>
 
+<form [formGroup]="paginationForm">
 
 <!-- Data display in tabular form -->
 <table class="table">
@@ -126,6 +127,40 @@
   </tbody>
 </table>
 
+<p>Page Size:
+  <select formControlName="pageSize" (change)="onPageSizeChange()">
+    <option value="5">5</option>
+
+    <option value="10">10</option>
+    <option value="20">20</option>
+    <option value="30">30</option>
+  </select>
+</p>
+
+<pagination
+  [totalItems]="totalItems"
+  [itemsPerPage]="getPageSize()"
+  (pageChanged)="pageChanged($event)"
+  [maxSize]="5"
+  [boundaryLinks]="true"
+  [rotate]="false"
+  [previousText]="'Previous'"
+  [nextText]="'Next'"
+  [firstText]="'First'"
+  [lastText]="'Last'"
+></pagination>
+
+
+<!-- <pagination
+[totalItems]="users.length"
+[itemsPerPage]="paginationForm.get('pageSize')?.value"
+[maxSize]="5"
+(pageChanged)="pageChanged($event)"
+class="pagination-lg"
+[rotate]="true"
+[boundaryLinks]="true"
+></pagination> -->
+
 <ng-template #template>
   <div class="modal-header">
     <h4 class="modal-title">User Details</h4>
@@ -160,13 +195,8 @@
   </div>
 </ng-template>
 
-<!-- Pagination code  -->
-<!-- <ul>
-  <p *ngFor="let user of users | slice:(currentPage - 1) * itemsPerPage : currentPage * itemsPerPage"> </p>
-  
-</ul>
-
-<pagination [totalItems]="totalItems"  [itemsPerPage]="itemsPerPage" (pageChanged)="pageChanged($event)"></pagination> -->
 
 
-<!-- <app-edit-user></app-edit-user> -->
+</form>
+
+

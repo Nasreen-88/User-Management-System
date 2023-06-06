@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { User } from '../models/user.model';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import Swal from 'sweetalert2';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { FilterPipe } from '../filter.pipe';
 import { PaginationConfig } from 'ngx-bootstrap/pagination';
 
@@ -25,42 +25,102 @@ export class AllUsersComponent implements OnInit {
   searchForm: FormGroup;
   filteredUsers!: User[];
   searchQuery: string = '';
+  paginationForm: FormGroup; // Reactive form for pagination
 
-  // pageSize = 5;
-  // currentPage = 1;
-
-  // Pagination properties
-  totalItems!: number;
-  itemsPerPage: number = 5;
-  currentPage: number = 1;
+  paginatedUsers: any[] = [];
+  totalItems = 0;
+  currentPage = 1;
+  itemsPerPage = 5;
 
 
-  constructor(private userService: UserService, private modalService: BsModalService,private router: Router) {
+  // pageSize = 10; // Number of users to display per page
 
-    this.totalItems = this.users.length;
 
+
+  constructor(private userService: UserService,
+     private modalService: BsModalService,
+     private router: Router,
+     private paginationConfig: PaginationConfig,
+     private formBuilder: FormBuilder) {
+
+    // this.totalItems = this.users.length;
+  //  this.paginationConfig.pageSize = this.pageSize;
+
+  this.paginationForm = this.formBuilder.group({
+    pageSize: [5], // Default page size
+    // currentPage: [1] // Default current page
+  });
 
     this.searchForm = new FormGroup({
       searchQuery: new FormControl('')
     });
    }
 
-   pageChanged(event: any): void {
-    this.currentPage = event.page;
-  }
+  //  pageChanged(event: any): void {
+  //   this.currentPage = event.page;
+  // }
+  
   
   
   ngOnInit() {
     this.userService.getUsers().subscribe(users => {
       this.users = users;
       this.filteredUsers = users;
+      this.totalItems = this.users.length;
+      this.paginateUsers();
 
     });
     this.searchForm.get('searchQuery')?.valueChanges.subscribe(() => {
       this.search();
     });
+
+    // this.applyPagination();
+    
+  }
+  paginateUsers(): void {
+    const startIndex = (this.currentPage - 1) * this.getPageSize();
+    const endIndex = startIndex + this.getPageSize();
+    this.paginatedUsers = this.users.slice(startIndex, endIndex);
+    // this.paginatedUsers = this.users.slice((this.currentPage - 1) * this.itemsPerPage, this.currentPage * this.itemsPerPage);
   }
 
+  // applyPagination(): void {
+  //   const pageSize = this.paginationForm.get('pageSize')?.value;
+  //   const startIndex = (this.currentPage - 1) * pageSize;
+  //   const endIndex = startIndex + pageSize;
+  
+  //   this.paginatedUsers = this.users.slice(startIndex, endIndex);
+  // }
+  
+  // pageChanged(event: any): void {
+  //   this.paginationForm.patchValue({
+  //     currentPage: event.page
+  //   });
+  //   this.paginateUsers();
+  // }
+  pageChanged(event: any): void {
+    this.currentPage = event.page;
+    this.paginateUsers();
+  }
+  
+
+  getPageSize(): number {
+    return this.paginationForm.value.pageSize;
+  }
+
+  getCurrentPage(): number {
+    return this.paginationForm.value.currentPage;
+  }
+
+  onPageSizeChange(): void {
+    this.paginateUsers();
+  }
+
+  // onPageSizeChange(): void {
+  //   this.itemsPerPage = this.paginationForm.value.pageSize;
+  //   this.paginateUsers();
+  // }
+  
   search(): void {
     const searchTerm = this.searchForm.get('searchQuery')?.value.toLowerCase();
     this.filteredUsers = this.users.filter(user => {
