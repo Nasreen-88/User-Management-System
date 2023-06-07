@@ -1,14 +1,26 @@
 
-<h2>Edit User</h2>
+<h3>Edit User</h3>
 <form [formGroup]="editUserForm" (ngSubmit)="onSubmit()">
+
+  <!--  id added  -->
   <div class="form-group">
-    <label for="name">Name</label>
-    <input type="text" class="form-control" id="name" formControlName="name"
-      readonly>
+    <label>ID:</label><br>
+    <input type="text" class="form-control" formControlName="id" class="w-25">
+    <div
+      *ngIf="editUserForm.controls['id'].invalid && editUserForm.controls['id'].touched"
+      class="text-danger">
+      ID is required.
+    </div>
+  </div>
+
+
+  <div class="form-group">
+    <label for="name">Name</label><br>
+    <input type="text" class="form-control" class="w-25" id="name" formControlName="name">
   </div>
   <div class="form-group">
-    <label for="email">Email</label>
-    <input type="email" class="form-control" id="email" formControlName="email">
+    <label for="email">Email</label><br>
+    <input type="email" class="form-control w-25" id="email" formControlName="email">
     <div
       *ngIf="editUserForm.controls['email'].invalid && (editUserForm.controls['email'].dirty || editUserForm.controls['email'].touched)">
       <div *ngIf="editUserForm.controls['email'].errors?.['required']"
@@ -18,8 +30,8 @@
     </div>
   </div>
   <div class="form-group">
-    <label for="phone">Phone</label>
-    <input type="text" class="form-control" id="phone" formControlName="phone">
+    <label for="phone">Phone</label><br>
+    <input type="text" class="form-control w-25" id="phone" formControlName="phone">
     <div
       *ngIf="editUserForm.controls['phone'].invalid && (editUserForm.controls['phone'].dirty || editUserForm.controls['phone'].touched)"
       class="text-danger">
@@ -27,8 +39,8 @@
     </div>
   </div>
   <div class="form-group">
-    <label for="experience">Experience</label>
-    <input type="number" class="form-control" id="experience"
+    <label for="experience">Experience</label><br>
+    <input type="number" class="form-control w-25" id="experience"
       formControlName="experience">
     <div
       *ngIf="editUserForm.controls['experience'].invalid && (editUserForm.controls['experience'].dirty || editUserForm.controls['experience'].touched)"
@@ -37,18 +49,26 @@
     </div>
   </div>
   <div class="form-group">
-    <label for="type">Type</label>
-    <select class="form-control" id="type" formControlName="type">
+    <label for="type">Type</label><br>
+    <ng-select class="form-control w-25 custom" id="type" formControlName="type">
+       <ng-option [value]="'Full-Time'">Full-Time</ng-option>
+      <ng-option [value]="'Part-Time'">Part-Time</ng-option>
+      <ng-option [value]="'Contractor'">Contractor</ng-option>
+    </ng-select>
+    <!-- <select class="form-control w-25" id="type" formControlName="type">
       <option [value]="'Full-Time'">Full-Time</option>
       <option [value]="'Part-Time'">Part-Time</option>
       <option [value]="'Contractor'">Contractor</option>
-    </select>
+    </select> -->
     <div
       *ngIf="editUserForm.controls['type'].invalid && (editUserForm.controls['type'].dirty || editUserForm.controls['type'].touched)"
       class="text-danger">
       Type is required.
     </div>
   </div>
-  <button type="submit" class="btn btn-primary">Save</button>
+  <div class="form-group top-bufferBtn">
+  <button type="submit" class="btn btn-secondary">Save</button> &nbsp;
   <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancel</button>
+
+</div>
 </form>

@@ -9,6 +9,7 @@ export class FilterPipe implements PipeTransform {
 
   transform(users: User[], searchTerm: string): User[] {
     if (!searchTerm) {
+     
       return users;
     }
 

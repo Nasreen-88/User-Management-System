@@ -15,6 +15,7 @@ import { User } from './models/user.model';
     // private apiUrl = 'https://localhost:3000/users';
     private apiUrl = "http://localhost:3000/users/{id}";
     private apiUrlforPost = "http://localhost:3000/addUser"
+    private apiUrlforPut = "http://localhost:3000/editUser/{id}"
 
     // private apiUrl = 'https://127.0.0.1:3000/users'
 
@@ -40,7 +41,7 @@ import { User } from './models/user.model';
     
     updateUser(user: User): Observable<User> {
       const url = `${this.apiUrl}/${user.id}`;
-      return this.http.put<User>(url, user);
+      return this.http.put<User>(this.apiUrlforPut, user);
     }
 
     // addUser(user: any): Observable<any> {

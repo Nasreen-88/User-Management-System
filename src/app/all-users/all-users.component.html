@@ -1,22 +1,47 @@
 
 
 <!-- Search Pipe Code -->
-<form [formGroup]="searchForm">
-  <input type="text" formControlName="searchQuery"
-    placeholder="Search by name or email">
-</form>
+<span>Search user :</span>
+<div>
+  <form [formGroup]="searchForm">
+    <label for>
+      <div class="search-input">
 
-<ul *ngIf="searchForm.get('searchQuery')?.value !== ''">
+      <input type="text" formControlName="searchQuery"
+        placeholder="Search by name or email"> &nbsp;
+
+        <span class="fa-stack search-icon">
+          <i class="fa fa-search" aria-hidden="true"></i>
+          <!-- <i class="fas fa-circle fa-stack-2x"></i>
+          <i class="fas fa-search fa-stack-1x fa-inverse"></i> -->
+        </span>
+        </div>
+    </label>
+  </form>
+</div>
+
+<ng-container *ngIf="searchForm.get('searchQuery')?.value !== ''">
+  <ul *ngIf="filteredUsers.length > 0">
+    <li *ngFor="let user of filteredUsers">
+      Name: {{ user.name }}
+    </li>
+    <li *ngFor="let user of filteredUsers">
+      Email: {{ user.email }}
+    </li>
+  </ul>
+  <p *ngIf="filteredUsers.length === 0">No user found!</p>
+</ng-container>
+<!-- <ul *ngIf="searchForm.get('searchQuery')?.value !== ''">
   <li *ngFor="let user of filteredUsers">
     Name :- {{ user.name }}
   </li>
   <li *ngFor="let user of filteredUsers">Email :- {{ user.email }}</li>
-</ul>
+</ul> -->
 
 <form [formGroup]="paginationForm">
 
   <!-- Data display in tabular form -->
-  <table class="table">
+  <table class="table-secondary">
     <thead>
       <tr>
         <th>ID</th>
@@ -30,6 +55,8 @@
     </thead>
 
     <tbody>
+      <ng-container *ngFor="let user of getCurrentPageUsers()">
+
       <tr *ngFor="let user of users ">
         <td>{{ user.id }}</td>
         <td>{{ user.name }}</td>
@@ -38,14 +65,18 @@
         <td>{{ user.experience }}</td>
         <td>{{ user.type }}</td>
         <td>
-          <button class="btn btn-primary" (click)="openModal(template, user)">View</button>&nbsp;&nbsp;
+          <button class="btn btn-secondary" (click)="openModal(template, user)">View</button>
+          &nbsp;&nbsp;
 
-          <button class="btn btn-primary" (click)="editUser(user)">Edit</button>&nbsp;&nbsp;
+          <button class="btn btn-secondary" (click)="editUser(user)">Edit</button>
+          &nbsp;&nbsp;
 
-          <button class="btn btn-primary" (click)="deleteUser(user)">Delete</button>
+          <button class="btn btn-secondary" (click)="deleteUser(user)">Delete</button>
 
         </td>
       </tr>
+    </ng-container>
+
 
     </tbody>
   </table>
@@ -53,13 +84,18 @@
   <p>Page Size:
     <select formControlName="pageSize" (change)="onPageSizeChange()">
       <option value="5">5</option>
-
       <option value="10">10</option>
       <option value="20">20</option>
       <option value="30">30</option>
     </select>
   </p>
 
+  <!-- <pagination
+  [boundaryLinks]="true"
+  [totalItems]="totalItems"
+  [itemsPerPage]="pageSize"
+  (pageChanged)="pageChanged($event)"
+></pagination> -->
   <pagination
     [totalItems]="totalItems"
     [itemsPerPage]="getPageSize()"

@@ -1,13 +1,13 @@
 
-<h2>Add User</h2>
+<h3>Add New User</h3>
 
 <form [formGroup]="addUserForm" (ngSubmit)="onSubmit()">
   <div class="form-group">
 
     <!--  id added  -->
     <div class="form-group">
-      <label>ID:</label>
-      <input type="text" class="form-control" formControlName="id">
+      <label>ID:</label><br>
+            <input type="text" class="form-control" formControlName="id" class="w-25">
       <div
         *ngIf="addUserForm.controls['id'].invalid && addUserForm.controls['id'].touched"
         class="text-danger">
@@ -15,8 +15,8 @@
       </div>
     </div>
 
-    <label>Name:</label>
-    <input type="text" class="form-control" formControlName="name">
+    <label>Name:</label><br>
+    <input type="text" class="form-control" formControlName="name" class="w-25">
     <div
       *ngIf="addUserForm.controls['name'].invalid && addUserForm.controls['name'].touched"
       class="text-danger">
@@ -24,8 +24,8 @@
     </div>
   </div>
   <div class="form-group">
-    <label>Email:</label>
-    <input type="email" class="form-control" formControlName="email">
+    <label>Email:</label><br>
+    <input type="email" class="form-control" formControlName="email" class="w-25">
     <div
       *ngIf="addUserForm.controls['email'].invalid && addUserForm.controls['email'].touched"
       class="text-danger">
@@ -33,8 +33,8 @@
     </div>
   </div>
   <div class="form-group">
-    <label>Phone:</label>
-    <input type="text" class="form-control" formControlName="phone">
+    <label>Phone:</label><br>
+    <input type="text" class="form-control" formControlName="phone" class="w-25">
     <div
       *ngIf="addUserForm.controls['phone'].invalid && addUserForm.controls['phone'].touched"
       class="text-danger">
@@ -42,8 +42,8 @@
     </div>
   </div>
   <div class="form-group">
-    <label>Experience:</label>
-    <input type="number" class="form-control" formControlName="experience">
+    <label>Experience:</label><br>
+    <input type="number" class="form-control" formControlName="experience" class="w-25">
     <div
       *ngIf="addUserForm.controls['experience'].invalid && addUserForm.controls['experience'].touched"
       class="text-danger">
@@ -51,18 +51,24 @@
     </div>
   </div>
   <div class="form-group">
-    <label>Type:</label>
-    <select class="form-control" formControlName="type">
+    <label>Type:</label><br>
+
+    <ng-select class="form-control w-25 custom" id="type" formControlName="type">
+      <ng-option [value]="'Full-Time'">Full-Time</ng-option>
+     <ng-option [value]="'Part-Time'">Part-Time</ng-option>
+     <ng-option [value]="'Contractor'">Contractor</ng-option>
+   </ng-select>
+    <!-- <select class="form-control w-25" formControlName="type">
       <option value disabled>Select Type</option>
       <option value="admin">Admin</option>
       <option value="manager">Manager</option>
       <option value="user">User</option>
-    </select>
+    </select> -->
     <div
       *ngIf="addUserForm.controls['type'].invalid && addUserForm.controls['type'].touched"
       class="text-danger">
       Type is required.
     </div>
   </div>
-  <button type="submit" class="btn btn-primary">Add User</button>
+  <button  type="submit" class="btn btn-secondary top-bufferBtn">Add User</button>
 </form>

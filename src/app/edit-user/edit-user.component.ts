@@ -25,11 +25,9 @@ export class EditUserComponent implements OnInit{
 
   
   ngOnInit(): void {
-     // Get the user ID from the route parameter
-    const idParam = this.route.snapshot.paramMap.get('id');
-    this.userId = idParam ? +idParam : 1;
-
+   
     this.editUserForm = this.formBuilder.group({
+      id: ['', Validators.required],
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       phone: ['', Validators.required],
@@ -37,17 +35,43 @@ export class EditUserComponent implements OnInit{
       type: ['', Validators.required],
     });
 
-    this.userService.getUser(this.userId).subscribe((user) => {
-      this.editUserForm.patchValue({
-        name: user.name,
-        email: user.email,
-        phone: user.phone,
-        experience: user.experience,
-        type: user.type,
+    this.route.params.subscribe(params => {
+      this.userId = params['id'];
+      this.userService.getUser(this.userId).subscribe(user => {
+        this.editUserForm.patchValue({
+          id:user.id,
+          name: user.name,
+          email: user.email,
+          phone: user.phone,
+          experience: user.experience,
+          type: user.type
+        });
       });
     });
+
+    // this.userService.getUser(this.userId).subscribe((user) => {
+    //   this.editUserForm.patchValue({
+    //     name: user.name,
+    //     email: user.email,
+    //     phone: user.phone,
+    //     experience: user.experience,
+    //     type: user.type,
+    //   });
+    // });
   }
 //To
+  // onSubmit(): void {
+  //   if (this.editUserForm.invalid) {
+  //     return;
+  //   }
+
+  //   const updatedUserData = { id: this.userId, ...this.editUserForm.value };
+
+  //   this.userService.updateUser(updatedUserData).subscribe(() => {
+  //     this.router.navigate(['/editUser']);
+  //   });
+  // }
+
   onSubmit(): void {
     if (this.editUserForm.invalid) {
       return;
@@ -56,11 +80,11 @@ export class EditUserComponent implements OnInit{
     const updatedUserData = { id: this.userId, ...this.editUserForm.value };
 
     this.userService.updateUser(updatedUserData).subscribe(() => {
-      this.router.navigate(['/users']);
+      this.router.navigate(['/allUsers']);
     });
   }
 
   onCancel(): void {
-    this.router.navigate(['/users']);
+    this.router.navigate(['/allUsers']);
   }
 }

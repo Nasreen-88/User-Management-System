@@ -18,16 +18,16 @@ app.use((req, res, next) => {
 const users = [
   {
     id: 1,
-    name: 'John Doe',
-    email: 'john@example.com',
+    name: 'User1',
+    email: 'User@example.com',
     phone: '1234567890',
     experience: 5,
     type: 'Full-time'
   },
   {
     id: 2,
-    name: 'Jane Smith',
-    email: 'jane@example.com',
+    name: 'User2',
+    email: 'User@example.com',
     phone: '9876543210',
     experience: 3,
     type: 'Part-time'
@@ -35,48 +35,48 @@ const users = [
 
   {
     id: 3,
-    name: 'Jane Smith',
-    email: 'jane@example.com',
+    name: 'User3',
+    email: 'User@example.com',
     phone: '9876543210',
     experience: 3,
     type: 'Part-time'
   },
   {
     id: 4,
-    name: 'Jane Smith',
-    email: 'jane@example.com',
+    name: 'User4',
+    email: 'User@example.com',
     phone: '9876543210',
     experience: 3,
     type: 'Part-time'
   },
   {
     id: 5,
-    name: 'Jane Smith',
-    email: 'jane@example.com',
+    name: 'User5',
+    email: 'User@example.com',
     phone: '9876543210',
     experience: 3,
     type: 'Part-time'
   },
   {
     id: 6,
-    name: 'Jane Smith',
-    email: 'jane@example.com',
+    name: 'User6',
+    email: 'User@example.com',
     phone: '9876543210',
     experience: 3,
     type: 'Part-time'
   },
   {
     id: 7,
-    name: 'John Doe',
-    email: 'john@example.com',
+    name: 'User7',
+    email: 'User@example.com',
     phone: '1234567890',
     experience: 5,
     type: 'Full-time'
   },
   {
     id: 8,
-    name: 'Jane Smith',
-    email: 'jane@example.com',
+    name: 'User8',
+    email: 'User@example.com',
     phone: '9876543210',
     experience: 3,
     type: 'Part-time'
@@ -84,48 +84,48 @@ const users = [
 
   {
     id: 9,
-    name: 'Jane Smith',
-    email: 'jane@example.com',
+    name: 'User9',
+    email: 'User@example.com',
     phone: '9876543210',
     experience: 3,
     type: 'Part-time'
   },
   {
     id: 10,
-    name: 'Jane Smith',
-    email: 'jane@example.com',
+    name: 'User10',
+    email: 'User@example.com',
     phone: '9876543210',
     experience: 3,
     type: 'Part-time'
   },
   {
     id: 11,
-    name: 'Jane Smith',
-    email: 'jane@example.com',
+    name: 'User11',
+    email: 'User@example.com',
     phone: '9876543210',
     experience: 3,
     type: 'Part-time'
   },
   {
     id: 12,
-    name: 'Jane Smith',
-    email: 'jane@example.com',
+    name: 'User12',
+    email: 'User@example.com',
     phone: '9876543210',
     experience: 3,
     type: 'Part-time'
   },
   {
     id: 13,
-    name: 'John Doe',
-    email: 'john@example.com',
+    name: 'User13',
+    email: 'User@example.com',
     phone: '1234567890',
     experience: 5,
     type: 'Full-time'
   },
   {
     id: 14,
-    name: 'Jane Smith',
-    email: 'jane@example.com',
+    name: 'User14',
+    email: 'User@example.com',
     phone: '9876543210',
     experience: 3,
     type: 'Part-time'
@@ -133,32 +133,32 @@ const users = [
 
   {
     id: 15,
-    name: 'Jane Smith',
-    email: 'jane@example.com',
+    name: 'User15',
+    email: 'User@example.com',
     phone: '9876543210',
     experience: 3,
     type: 'Part-time'
   },
   {
     id: 16,
-    name: 'Jane Smith',
-    email: 'jane@example.com',
+    name: 'User16',
+    email: 'User@example.com',
     phone: '9876543210',
     experience: 3,
     type: 'Part-time'
   },
   {
     id: 17,
-    name: 'Jane Smith',
-    email: 'jane@example.com',
+    name: 'User17',
+    email: 'User@example.com',
     phone: '9876543210',
     experience: 3,
     type: 'Part-time'
   },
   {
     id: 18,
-    name: 'Jane Smith',
-    email: 'jane@example.com',
+    name: 'User18',
+    email: 'User@example.com',
     phone: '9876543210',
     experience: 3,
     type: 'Part-time'
@@ -175,6 +175,18 @@ app.post('/addUser', (req, res) => {
   res.status(201).json(newUser); // Return the newly added user as response
 });
 
+app.put('/editUser/:id', (req, res) => {
+  const userId = parseInt(req.params.id);
+  const updatedUser = req.body;
+  
+  const userIndex = users.findIndex(u => u.id === userId);
+  if (userIndex !== -1) {
+    users[userIndex] = updatedUser;
+    res.json(updatedUser);
+  } else {
+    res.status(404).json({ error: 'User not found' });
+  }
+});
 
 app.listen(3000, () => {
   console.log('API server is running on port 3000');

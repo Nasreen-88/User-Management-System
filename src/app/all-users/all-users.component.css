@@ -8,3 +8,25 @@ td {
   padding: 10px;
   text-align: center;
 }
+searchPipe{
+  margin-top: 50px;
+}
+
+.search-input {
+  position: relative;
+}
+
+.search-input input[type="text"] {
+  padding-left: 2.5rem; 
+}
+
+.search-input .search-icon {
+  position: absolute;
+  top: 50%;
+  left: 0.5rem;
+  transform: translateY(-50%);
+}
+
+.search-input .search-icon i {
+  color: #bd6464;
+}

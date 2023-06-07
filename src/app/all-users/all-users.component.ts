@@ -1,16 +1,13 @@
 
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { UserService } from '../user.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../models/user.model';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import Swal from 'sweetalert2';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { FilterPipe } from '../filter.pipe';
 import { PaginationConfig } from 'ngx-bootstrap/pagination';
-
-
-
 
 @Component({
   selector: 'app-all-users',
@@ -28,15 +25,34 @@ export class AllUsersComponent implements OnInit {
   paginationForm: FormGroup; // Reactive form for pagination
 
   paginatedUsers: any[] = [];
-  totalItems = 0;
-  currentPage = 1;
+  totalItems = 50;
+  // currentPage = 1;
   itemsPerPage = 5;
+
+  // --------------------
+  pageSize: number = 10; // Number of users to display per page
+  currentPage: number = 1; // Current page number
+
+  // Method to handle page change
+  onPageChange(event: any): void {
+    this.currentPage = event.page;
+  }
+
+ // Method to get the current page users
+  getCurrentPageUsers(): User[] {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    return this.users.slice(startIndex, endIndex);
+  }
+
+  //---------------------
 
   constructor(private userService: UserService,
     private modalService: BsModalService,
     private router: Router,
     private paginationConfig: PaginationConfig,
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute) {
 
 
     this.paginationForm = this.formBuilder.group({
@@ -101,11 +117,11 @@ export class AllUsersComponent implements OnInit {
   }
 
 
-  closeModal() {
+  closeModal() {          
     this.modalRef.hide();
   }
 
-  editUser(user: User) {
+  editUser(user: User): void  {
     // Redirect to the edit user page with the user ID
     this.router.navigate(['/editUser', user.id]);
   }

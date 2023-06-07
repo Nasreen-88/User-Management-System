@@ -2,3 +2,19 @@
     margin-top: 40px;
     margin-left: 20px;
   }
+
+  .top-bufferBtn{
+    margin-top: 70px;
+    margin-left: 20px;
+  }
+
+  .ng-select.custom {
+    /* border:2px; */
+    min-height: 0px;
+    border-radius: 0;
+}
+.ng-select.custom .ng-select-container  {            
+    min-height: 0px;
+    /* border-radius: 10; */
+}
+  

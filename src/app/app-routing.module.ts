@@ -13,7 +13,7 @@ const routes: Routes = [
 
   { path: 'allUsers', component: AllUsersComponent },
   { path: 'addUser', component: AddUserComponent },
-  { path: 'editUser', component: EditUserComponent },
+  { path: 'editUser/:id', component: EditUserComponent },
   { path: '', component: HomeComponent },
   { path: '**', component: PageNotFoundComponent }
 ];

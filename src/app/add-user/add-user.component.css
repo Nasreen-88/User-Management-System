@@ -2,3 +2,21 @@
     margin-top: 40px;
     margin-left: 20px;
   }
+  div{
+    margin-bottom: 30px;
+  }
+
+  .top-bufferBtn{
+    margin-top: 40px;
+    margin-left: 20px;
+  }
+
+  .ng-select.custom {
+    /* border:2px; */
+    min-height: 0px;
+    border-radius: 0;
+}
+.ng-select.custom .ng-select-container  {            
+    min-height: 0px;
+    /* border-radius: 10; */
+}
